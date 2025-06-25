@@ -1,3 +1,5 @@
 music21
 pretty_midi
 mido
+opencv-python
+numpy
