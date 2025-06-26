@@ -345,17 +345,31 @@ Nutzt den Tonbereich aus der XML zur automatischen Instrumentenwahl:
 - Mittel (unter F4) → Viola
 - Hoch → Violine
 
-## 🎲 Wie funktioniert der Webcam-Zufallsgenerator?
+## 🎲 Wie funktioniert der Webcam-Zufallsgenerator? - Einfach erklärt
 
-**Neu**: Optimiertes Pool-System für bessere Performance!
+**Grundprinzip in 10 Sätzen:**
 
-1. **Einmalige Kamera-Öffnung**: Keine Blinkerei mehr
-2. **Pool-Generierung**: 50-100 Zufallszahlen werden vorher erstellt
-3. **Bildaufnahme**: Kontinuierliche Webcam-Frames mit minimaler Verzögerung
-4. **Differenz-Analyse**: Vergleich aufeinanderfolgender Bilder
-5. **Hash-Generierung**: SHA256-Hash der Bilddifferenzen
-6. **Schnelle Abfrage**: Zufallszahlen aus dem Pool ohne Kamera-Zugriff
-7. **Automatische Nachfüllung**: Neuer Pool wenn der alte aufgebraucht ist
+1. Die **Webcam** macht kontinuierlich Fotos deines Gesichts oder deiner Umgebung.
+
+2. Der Computer **vergleicht** jedes neue Bild mit dem vorherigen Bild und sucht nach Unterschieden.
+
+3. Selbst wenn du stillhältst, gibt es **winzige Bewegungen** (Atmung, Augenblinzeln) und elektronisches **Kamera-Rauschen**.
+
+4. Diese minimalen **Bildveränderungen** werden in Zahlen umgewandelt - jeder Pixel hat einen Helligkeitswert.
+
+5. Ein **mathematischer Hash-Algorithmus** (SHA256) verwandelt diese Bilddaten in eine scheinbar zufällige Zahlenfolge.
+
+6. Das Besondere: Schon die **kleinste Änderung** im Bild führt zu einer völlig anderen Zufallszahl.
+
+7. Dadurch entstehen **50-100 Zufallszahlen** auf einmal, die in einem Pool gespeichert werden.
+
+8. Wenn dein Musikprogramm eine Zufallszahl braucht (z.B. für eine Note), wird eine aus diesem **Pool** genommen.
+
+9. Das System nutzt also die **physikalische Unvorhersagbarkeit** der realen Welt statt computergenerierter Pseudo-Zufälle.
+
+10. **Resultat**: Deine Musik wird durch echte, physikalische Zufälligkeit aus der Umgebung komponiert - jedes Stück ist dadurch wirklich einzigartig!
+
+**Kurz gesagt:** Webcam → Bildveränderungen → Hash-Mathematik → Echte Zufallszahlen → Einzigartige Musik! 🎵
 
 ```python
 # Beispiel für Webcam-Random-Nutzung
@@ -397,11 +411,6 @@ Nach dem Ausführen erhältst du:
 - **MIDI**: Für weitere Bearbeitung
 - **MusicXML**: Für Import in andere Notenprogramme
 
-**Neu**: Konsolen-Ausgabe zeigt verwendete Parameter:
-```
-Generating random score with Streichtrio, 34 measures (config range: 30-40)
-Using random measure count from config: 34 measures (range: 30-40)
-```
 
 ## 🔧 Erweiterte Nutzung
 
@@ -517,84 +526,6 @@ python -c "import xml.etree.ElementTree as ET; ET.parse('config/config.xml')"
 # <num_measures>25</num_measures>     ✓
 # <num_measures>10-5</num_measures>   ✗ (Min > Max)
 ```
-
-## 🎵 Musikalische Konzepte für Einsteiger
-
-### Taktanzahl (Measures) - Neu: Konfigurierbare Bereiche
-- **8-12 Takte**: Kurze Phrasen und Miniaturen (~16-24 Sekunden)
-- **16-24 Takte**: Standard-Perioden (~32-48 Sekunden)  
-- **30-40 Takte**: Mittlere Formen (~1-1,5 Minuten)
-- **50+ Takte**: Ausführliche Kompositionen (2+ Minuten)
-
-**Neu in Config**: Du kannst jetzt Bereiche definieren, z.B. `<num_measures>30-40</num_measures>`
-
-### Instrumentenbereiche
-- **Violine**: G3-E7 (4 Oktaven) - hohe, brillante Töne
-- **Viola**: C3-A6 (3+ Oktaven) - warme Mittellage
-- **Cello**: C2-G5 (3+ Oktaven) - tiefe, ausdrucksvolle Töne
-- **Klavier**: A0-C8 (7+ Oktaven) - größter Tonumfang
-- **Flöte**: C4-D7 (3+ Oktaven) - helle, luftige Töne
-
-### Aleatorische Elemente
-- **Tonhöhe**: Zufällige Noten im Instrumentenbereich
-- **Rhythmus**: Wechselnde Notenwerte (ganze, halbe, viertel Noten)
-- **Dynamik**: Lautstärke-Variationen (pp=sehr leise, ff=sehr laut)
-- **Artikulation**: Spielweise (staccato=kurz, legato=gebunden)
-- **Taktanzahl**: Zufällige Länge aus konfigurierbarem Bereich
-
-### Dynamik-Zeichen erklärt:
-- **pp** (pianissimo) = sehr leise
-- **p** (piano) = leise
-- **mp** (mezzo-piano) = mittlere Lautstärke (eher leise)
-- **mf** (mezzo-forte) = mittlere Lautstärke (eher laut)
-- **f** (forte) = laut
-- **ff** (fortissimo) = sehr laut
-
-### Artikulation erklärt:
-- **legato**: Gebunden, fließend
-- **staccato**: Kurz, abgestoßen
-- **accent**: Betont
-- **tenuto**: Gehalten, voll ausgehalten
-- **none**: Normale Spielweise
-
-## 📚 Weiterführende Informationen
-
-- **John Cage**: Pionier der aleatorischen Musik
-- **Iannis Xenakis**: Stochastische Komposition
-- **Music21**: [web.mit.edu/music21](http://web.mit.edu/music21/)
-- **MuseScore**: [musescore.org](https://musescore.org)
-- **Python-Tutorial**: [python.org/tutorial](https://docs.python.org/3/tutorial/)
-- **OpenCV**: Computer Vision für Zufallsgenerierung
-
-## 🤝 Beitragen
-
-1. Fork das Repository
-2. Erstelle einen Feature-Branch (`git checkout -b feature/neue-funktion`)
-3. Commit deine Änderungen (`git commit -am 'Neue Funktion hinzugefügt'`)
-4. Push zum Branch (`git push origin feature/neue-funktion`)
-5. Erstelle einen Pull Request
-
-## 📄 Lizenz
-
-Dieses Projekt steht unter der MIT-Lizenz. Siehe `LICENSE` Datei für Details.
-
-## 🙏 Danksagungen
-
-- **Music21**: Für die exzellente Musiknotations-Bibliothek
-- **MuseScore**: Für die professionelle Score-Rendering
-- **OpenCV**: Für Computer Vision Funktionalität
-- **John Cage & Iannis Xenakis**: Inspiration für aleatorische Komposition
-
 ---
 
 *Lass die Webcam entscheiden, wie deine Musik klingt! 🎲🎵*
-
-## 💡 Neue Tipps für Musiker
-
-- **Experimentiere** mit verschiedenen Taktanzahl-Bereichen in der XML
-- **Nutze große Bereiche** (z.B. 20-60) für überraschende Längen
-- **Definiere thematische Bereiche**: 8-12 für Etüden, 30-50 für Charakterstücke
-- **Bewege** dich vor der Webcam für mehr Zufälligkeit
-- **Kombiniere** mehrere kurze Stücke zu Suiten
-- **Analysiere** die generierten Stücke auf wiederkehrende Muster
-- **Bearbeite** die XML für deine Lieblingsinstrumente und -besetzungen
