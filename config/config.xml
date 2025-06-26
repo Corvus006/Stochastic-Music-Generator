@@ -1,15 +1,5 @@
 <aleatoricMusic>
-  <pitches>
-    <pitch>C4</pitch>
-    <pitch>D4</pitch>
-    <pitch>E4</pitch>
-    <pitch>F4</pitch>
-    <pitch>G4</pitch>
-    <pitch>A4</pitch>
-    <pitch>B4</pitch>
-    <pitch>C5</pitch>
-  </pitches>
-
+  <num_measures>30-40</num_measures>
   <rhythms>
     <rhythm>1/1</rhythm>
     <rhythm>1/2</rhythm>
