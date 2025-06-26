@@ -35,7 +35,7 @@ Musik-Aleatorik/
 └── README.md
 ```
 
-## 🚀 Installation - Schritt für Schritt (auch für Musiker ohne IT-Kenntnisse)
+## 🚀 Installation - Schritt für Schritt 
 
 ### Schritt 1: Python installieren
 
