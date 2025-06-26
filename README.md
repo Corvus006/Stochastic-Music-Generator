@@ -2,20 +2,23 @@
 
 Ein **Stochastischer Musik-Generator**, der mithilfe von **Webcam-basierter Zufälligkeit** und **XML-Konfiguration** aleatorische Musikstücke komponiert und als Noten (PDF) und Audio (MP3) exportiert.
 
-## 🎼 Was ist Aleatorische Musik?
+## 🎵 Wie funktioniert es?
 
-**Aleatorische Musik** (von lat. *alea* = Würfel) ist Musik, die durch **Zufall** komponiert wird. Unser Generator nutzt die **Webcam** als Zufallsquelle für echte Unvorhersagbarkeit in der Komposition.
+**Einfache 4-Schritte-Erklärung:**
 
-## 🎯 Features
+1. **Konfiguration lesen**: Das Programm liest die `config/config.xml` Datei, die alle musikalischen Parameter enthält (Instrumente, Rhythmen, Dynamik, Taktanzahl-Bereiche).
 
-- **Webcam-Zufallsgenerator**: Nutzt Kamerabilder für echte Zufälligkeit
-- **XML-Konfiguration**: Flexible Einstellung von Instrumenten, Rhythmen, Dynamik und Taktanzahl
-- **Ensemble-Unterstützung**: Streichtrio, Holzbläserquintett, Klavier Solo, etc.
-- **Intelligente Instrumentenerkennung**: Fuzzy-Matching und automatische Fallbacks
-- **Konfigurierbare Taktanzahl**: Definiere Bereiche (z.B. 30-40 Takte) in der XML
-- **Automatischer Export**: PDF-Noten und MP3-Audio
-- **Music21-Integration**: Professionelle Musiknotation
-- **MuseScore-Kompatibilität**: Hochwertige PDF- und Audio-Ausgabe
+2. **Zufälligkeit aus Webcam**: Die Kamera nimmt kontinuierlich Bilder auf und nutzt winzige Bewegungen und Kamera-Rauschen zur Generierung echter Zufallszahlen.
+
+3. **Musikkomposition**: Basierend auf der XML-Konfiguration und den Webcam-Zufallszahlen wird automatisch ein komplettes Musikstück komponiert (Noten, Rhythmen, Dynamik).
+
+4. **Export in 4 Formaten**: Das fertige Werk wird automatisch exportiert als:
+   - **PDF** (Noten zum Musizieren)
+   - **MP3** (Audio zum Anhören)
+   - **MIDI** (für Musiksoftware)
+   - **MusicXML** (für andere Notenprogramme)
+
+
 
 ## 📁 Projektstruktur
 
@@ -221,34 +224,10 @@ Das Programm generiert automatisch:
 2. **Zufälliges Ensemble** (zufällige Taktanzahl aus Config-Bereich)
 3. **Klavierstück** (zufällige Taktanzahl aus Config-Bereich)
 
-### Programmatische Nutzung
-
-```python
-from aleatoric.stochastic_composer import create_multi_voice_score, create_random_score
-from aleatoric.score_exporter import generate_pdf_and_mp3
-
-# Automatische Taktanzahl aus XML-Config (z.B. 30-40 Takte)
-score = create_multi_voice_score("Streichtrio", title="Mein aleatorisches Streichtrio")
-generate_pdf_and_mp3(score, "mein_streichtrio")
-
-# Spezifische Taktanzahl (überschreibt Config)
-score = create_multi_voice_score("Streichtrio", 16, "Kurzes Streichtrio")
-generate_pdf_and_mp3(score, "kurzes_streichtrio")
-
-# Komplett zufällig (Ensemble UND Taktanzahl aus Config)
-random_score = create_random_score()
-generate_pdf_and_mp3(random_score, "zufallskomposition")
-
-# Verschiedene Ensembles mit Config-Taktanzahl
-piano_score = create_multi_voice_score("Klavier Solo", title="Aleatorisches Klavierstück")
-quintet_score = create_multi_voice_score("Holzbläserquintett", title="Bläserquintett")
-```
 
 ## ⚙️ Konfiguration
 
 Die Datei `config/config.xml` enthält alle musikalischen Parameter:
-
-### Neue Features in der XML-Konfiguration:
 
 #### Taktanzahl-Bereiche:
 ```xml
@@ -257,275 +236,27 @@ Die Datei `config/config.xml` enthält alle musikalischen Parameter:
 <num_measures>20</num_measures>     <!-- Feste Anzahl von 20 Takten -->
 ```
 
-### Verfügbare Ensembles:
-- **Streichtrio**: Violine, Viola, Cello
-- **Holzbläserquintett**: Flöte, Oboe, Klarinette, Fagott, Horn
-- **Klavier Solo**: Soloklavier
-- **Harfe Solo**: Soloharfe
-- **Kammermusik**: Klarinette + Klavier, Flöte + Klavier, Violine + Klavier
 
-### Musikalische Parameter:
-- **Rhythmen**: 1/1, 1/2, 1/4, 1/8, 1/16
-- **Dynamik**: pp, p, mp, mf, f, ff
-- **Artikulation**: legato, staccato, accent, tenuto, none
-- **Taktanzahl**: Konfigurierbare Bereiche (z.B. 30-40)
 
-### Vollständige Beispiel-Konfiguration:
-```xml
-<aleatoricMusic>
-  <num_measures>25-35</num_measures>
-  
-  <rhythms>
-    <rhythm>1/1</rhythm>
-    <rhythm>1/2</rhythm>
-    <rhythm>1/4</rhythm>
-    <rhythm>1/8</rhythm>
-    <rhythm>1/16</rhythm>
-  </rhythms>
+## 📁 Output & Dateiformate
 
-  <dynamics>
-    <dynamic>pp</dynamic>
-    <dynamic>p</dynamic>
-    <dynamic>mp</dynamic>
-    <dynamic>mf</dynamic>
-    <dynamic>f</dynamic>
-    <dynamic>ff</dynamic>
-  </dynamics>
-
-  <articulations>
-    <articulation>legato</articulation>
-    <articulation>staccato</articulation>
-    <articulation>accent</articulation>
-    <articulation>tenuto</articulation>
-    <articulation>none</articulation>
-  </articulations>
-
-  <instrumentations>
-    <ensemble name="Mein Trio">
-      <instrument name="Violine" range="G3-E7" maxSimultaneousNotes="2">
-        Violinbeschreibung
-      </instrument>
-      <instrument name="Klavier" range="A0-C8" maxSimultaneousNotes="10">
-        Klavierbeschreibung
-      </instrument>
-    </ensemble>
-  </instrumentations>
-</aleatoricMusic>
-```
-
-## 🎲 Intelligente Instrumentenerkennung
-
-Das System erkennt Instrumente mit mehreren fortschrittlichen Methoden:
-
-### 1. Direktes Mapping (Deutsch/Englisch):
-```python
-"violine" → Violin()
-"klavier" → Piano()
-"flöte" → Flute()
-"cello" → Violoncello()
-```
-
-### 2. Fuzzy String Matching:
-```python
-"viollin" → "violine" → Violin()  # Tippfehler-Korrektur
-"klarnet" → "klarinette" → Clarinet()  # Abkürzungen
-```
-
-### 3. Kategorie-basierte Fallbacks:
-```python
-"Holzbläser" → Flute()
-"Streicher" → Violin()
-"Tasteninstrument" → Piano()
-```
-
-### 4. Config-basierte Fallbacks:
-Nutzt den Tonbereich aus der XML zur automatischen Instrumentenwahl:
-- Sehr tief (unter E2) → Kontrabass
-- Tief (unter G3) → Cello
-- Mittel (unter F4) → Viola
-- Hoch → Violine
-
-## 🎲 Wie funktioniert der Webcam-Zufallsgenerator? - Einfach erklärt
-
-**Grundprinzip in 10 Sätzen:**
-
-1. Die **Webcam** macht kontinuierlich Fotos deines Gesichts oder deiner Umgebung.
-
-2. Der Computer **vergleicht** jedes neue Bild mit dem vorherigen Bild und sucht nach Unterschieden.
-
-3. Selbst wenn du stillhältst, gibt es **winzige Bewegungen** (Atmung, Augenblinzeln) und elektronisches **Kamera-Rauschen**.
-
-4. Diese minimalen **Bildveränderungen** werden in Zahlen umgewandelt - jeder Pixel hat einen Helligkeitswert.
-
-5. Ein **mathematischer Hash-Algorithmus** (SHA256) verwandelt diese Bilddaten in eine scheinbar zufällige Zahlenfolge.
-
-6. Das Besondere: Schon die **kleinste Änderung** im Bild führt zu einer völlig anderen Zufallszahl.
-
-7. Dadurch entstehen **50-100 Zufallszahlen** auf einmal, die in einem Pool gespeichert werden.
-
-8. Wenn dein Musikprogramm eine Zufallszahl braucht (z.B. für eine Note), wird eine aus diesem **Pool** genommen.
-
-9. Das System nutzt also die **physikalische Unvorhersagbarkeit** der realen Welt statt computergenerierter Pseudo-Zufälle.
-
-10. **Resultat**: Deine Musik wird durch echte, physikalische Zufälligkeit aus der Umgebung komponiert - jedes Stück ist dadurch wirklich einzigartig!
-
-**Kurz gesagt:** Webcam → Bildveränderungen → Hash-Mathematik → Echte Zufallszahlen → Einzigartige Musik! 🎵
-
-```python
-# Beispiel für Webcam-Random-Nutzung
-from aleatoric.custom_random import get_random_number, initialize_random_generator, cleanup_random_generator
-
-# Einmal initialisieren
-initialize_random_generator()
-
-# Viele schnelle Abfragen
-note_pitch = get_random_number(60, 84)  # C4 bis C6
-rhythm_choice = get_random_number(0, 4)  # 5 Rhythmus-Optionen
-
-# Am Ende aufräumen
-cleanup_random_generator()
-```
-
-## 📁 Output-Struktur
-
-Jede Komposition erstellt einen eigenen Ordner in `output/`:
+Jede Komposition erstellt automatisch einen eigenen Ordner in `output/` mit **4 verschiedenen Dateiformaten**:
 
 ```
 output/
 ├── streichtrio_aleatorisch/
-│   ├── streichtrio_aleatorisch.musicxml
-│   ├── streichtrio_aleatorisch.pdf
-│   ├── streichtrio_aleatorisch.mid
-│   └── streichtrio_aleatorisch.mp3
-├── vollstaendig_aleatorisch/
-│   └── ...
-└── klavier_aleatorisch/
-    └── ...
+│   ├── streichtrio_aleatorisch.musicxml    # Für andere Notenprogramme
+│   ├── streichtrio_aleatorisch.pdf         # Professionell gesetzte Noten
+│   ├── streichtrio_aleatorisch.mid         # Für weitere Bearbeitung
+│   └── streichtrio_aleatorisch.mp3         # Audio-Wiedergabe
+└── weitere_kompositionen/
 ```
 
-## 🎼 Beispiel-Ausgabe
-
-Nach dem Ausführen erhältst du:
-- **PDF**: Professionell gesetzte Noten
-- **MP3**: Audio-Wiedergabe des Stücks
-- **MIDI**: Für weitere Bearbeitung
-- **MusicXML**: Für Import in andere Notenprogramme
+**Was du erhältst:**
+- **PDF**: Druckfertige Noten zum Musizieren
+- **MP3**: Sofort anhörbare Audio-Version  
+- **MIDI**: Für DAWs und Musiksoftware
 
 
-## 🔧 Erweiterte Nutzung
-
-### Taktanzahl-Konfiguration
-```xml
-<!-- Verschiedene Bereiche für verschiedene Stimmungen -->
-<num_measures>8-12</num_measures>   <!-- Kurze Miniaturen -->
-<num_measures>20-30</num_measures>  <!-- Mittlere Länge -->
-<num_measures>50-80</num_measures>  <!-- Ausführliche Stücke -->
-<num_measures>16</num_measures>     <!-- Feste Anzahl -->
-```
-
-### Eigene Ensembles definieren
-```xml
-<ensemble name="Mein Jazz-Trio">
-  <instrument name="Saxophon" range="Bb3-F#6" maxSimultaneousNotes="1">
-    Alt-Saxophon für Jazz-Improvisationen
-  </instrument>
-  <instrument name="Klavier" range="A0-C8" maxSimultaneousNotes="6">
-    Jazz-Piano mit Akkorden
-  </instrument>
-  <instrument name="Kontrabass" range="E1-G4" maxSimultaneousNotes="1">
-    Walking Bass
-  </instrument>
-</ensemble>
-```
-
-### Webcam-Session manuell steuern
-```python
-from aleatoric.custom_random import webcam_random_session
-
-with webcam_random_session() as generator:
-    generator.generate_random_pool(100)  # 100 Zufallszahlen vorher generieren
-    for i in range(50):
-        note = generator.get_random_from_pool(60, 72)
-        print(f"Note {i}: {note}")
-```
-
-### Verschiedene Kompositionslängen
-```python
-# Nutzt Config-Bereich (z.B. 30-40 Takte)
-auto_score = create_multi_voice_score("Holzbläserquintett")
-
-# Überschreibt Config mit spezifischer Länge
-short_score = create_multi_voice_score("Klavier Solo", 8, "Miniatur")
-long_score = create_multi_voice_score("Streichtrio", 100, "Ausführliche Komposition")
-```
-
-## 🐛 Troubleshooting - Häufige Probleme
-
-### "python ist kein erkannter Befehl" (Windows)
-```cmd
-# Versuche stattdessen:
-python3 main.py
-
-# Oder Python neu installieren mit "Add to PATH" Option
-```
-
-### Virtual Environment aktiviert sich nicht
-```bash
-# Windows: Stelle sicher, dass du in PowerShell oder CMD bist
-musik_env\Scripts\activate.bat
-
-# Linux/Mac: Prüfe den Pfad
-ls musik_env/bin/activate
-source musik_env/bin/activate
-```
-
-### Webcam-Probleme
-```bash
-# Linux: Webcam testen
-ls /dev/video*
-v4l2-ctl --list-devices
-
-# Webcam-Berechtigung
-sudo usermod -a -G video $USER
-
-# Neustart nach Berechtigung
-```
-
-### MuseScore nicht gefunden
-```bash
-# MuseScore-Pfad prüfen
-which musescore3
-whereis musescore
-
-# Alternative Installation
-snap install musescore
-```
-
-### Fehlende Python-Module
-```bash
-# Virtual Environment aktivieren, dann:
-pip install --upgrade music21 opencv-python numpy
-
-# Falls pip nicht funktioniert:
-python -m pip install music21 opencv-python numpy
-```
-
-### "Keine Berechtigung" Fehler (Linux/Mac)
-```bash
-# Python-Pakete für Benutzer installieren:
-pip install --user music21 opencv-python numpy
-```
-
-### XML-Konfigurationsfehler
-```bash
-# Prüfe XML-Syntax
-python -c "import xml.etree.ElementTree as ET; ET.parse('config/config.xml')"
-
-# Beispiel für gültige num_measures:
-# <num_measures>30-40</num_measures>  ✓
-# <num_measures>25</num_measures>     ✓
-# <num_measures>10-5</num_measures>   ✗ (Min > Max)
-```
 ---
-
 *Lass die Webcam entscheiden, wie deine Musik klingt! 🎲🎵*
