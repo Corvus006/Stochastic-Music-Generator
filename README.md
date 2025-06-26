@@ -1,11 +1,4 @@
-# Musik-Aleatorik 
-Hier wird per python zufällige Werke nach dem zufallsprinzip der Aleatorik generiert.
-# install dependencies
-sudo apt install lilypond
-
-# 3. Optional: fluidsynth (für Audio aus MIDI)
-sudo apt install fluidsynth
-
-# 4. Optional: ein SoundFont (für fluidsynth)
-# Beispiel: General MIDI SoundFont
-sudo apt install fluid-soundfont-gm
+# Music Aleatoricism
+This repository contains code for generating a musical piece based on aleatoric principles.
+All elements are generated randomly, using the difference between two successive webcam images.
+This leverages the physical noise inherent in webcams, which introduces truly unpredictable randomness.
