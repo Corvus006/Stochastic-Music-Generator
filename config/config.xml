@@ -1,0 +1,76 @@
+<aleatoricMusic>
+  <pitches>
+    <pitch>C4</pitch>
+    <pitch>D4</pitch>
+    <pitch>E4</pitch>
+    <pitch>F4</pitch>
+    <pitch>G4</pitch>
+    <pitch>A4</pitch>
+    <pitch>B4</pitch>
+    <pitch>C5</pitch>
+  </pitches>
+
+  <rhythms>
+    <rhythm>1/1</rhythm>
+    <rhythm>1/2</rhythm>
+    <rhythm>1/4</rhythm>
+    <rhythm>1/8</rhythm>
+    <rhythm>1/16</rhythm>
+  </rhythms>
+
+  <dynamics>
+    <dynamic>pp</dynamic>
+    <dynamic>p</dynamic>
+    <dynamic>mp</dynamic>
+    <dynamic>mf</dynamic>
+    <dynamic>f</dynamic>
+    <dynamic>ff</dynamic>
+  </dynamics>
+
+  <articulations>
+    <articulation>legato</articulation>
+    <articulation>staccato</articulation>
+    <articulation>accent</articulation>
+    <articulation>tenuto</articulation>
+    <articulation>none</articulation>
+  </articulations>
+
+  <instrumentations>
+    <ensemble name="Streichtrio">
+      <instrument name="Violine" range="G3-E7" maxSimultaneousNotes="2">Tonumfang: G3 bis E7. Doppelgriffe möglich, maximal 2 Töne gleichzeitig.</instrument>
+      <instrument name="Viola" range="C3-A6" maxSimultaneousNotes="2">Tonumfang: C3 bis A6. Doppelgriffe möglich.</instrument>
+      <instrument name="Cello" range="C2-G5" maxSimultaneousNotes="2">Tonumfang: C2 bis G5. Zwei gleichzeitige Töne realistisch.</instrument>
+    </ensemble>
+
+    <ensemble name="Holzbläserquintett">
+      <instrument name="Flöte" range="C4-D7" maxSimultaneousNotes="1">Tonumfang: C4 bis D7. Nur einstimmig.</instrument>
+      <instrument name="Oboe" range="Bb3-A6" maxSimultaneousNotes="1">Tonumfang: Bb3 bis A6. Nur einstimmig.</instrument>
+      <instrument name="Klarinette" range="E3-C7" maxSimultaneousNotes="1">Tonumfang: E3 bis C7. Nur einstimmig.</instrument>
+      <instrument name="Fagott" range="Bb1-E5" maxSimultaneousNotes="1">Tonumfang: Bb1 bis E5. Nur einstimmig.</instrument>
+      <instrument name="Horn" range="F2-C6" maxSimultaneousNotes="1">Tonumfang: F2 bis C6. Nur einstimmig.</instrument>
+    </ensemble>
+
+    <ensemble name="Klarinette und Klavier">
+      <instrument name="Klarinette" range="E3-C7" maxSimultaneousNotes="1">Tonumfang: E3 bis C7. Nur einstimmig.</instrument>
+      <instrument name="Klavier" range="A0-C8" maxSimultaneousNotes="10">Tonumfang: A0 bis C8. Bis zu 10 Töne gleichzeitig (alle Finger).</instrument>
+    </ensemble>
+
+    <ensemble name="Flöte und Klavier">
+      <instrument name="Flöte" range="C4-D7" maxSimultaneousNotes="1">Tonumfang: C4 bis D7. Nur einstimmig.</instrument>
+      <instrument name="Klavier" range="A0-C8" maxSimultaneousNotes="10">Tonumfang: A0 bis C8. Bis zu 10 Töne gleichzeitig.</instrument>
+    </ensemble>
+
+    <ensemble name="Violine und Klavier">
+      <instrument name="Violine" range="G3-E7" maxSimultaneousNotes="2">Tonumfang: G3 bis E7. Doppelgriffe möglich.</instrument>
+      <instrument name="Klavier" range="A0-C8" maxSimultaneousNotes="10">Tonumfang: A0 bis C8. Bis zu 10 Töne gleichzeitig.</instrument>
+    </ensemble>
+
+    <ensemble name="Klavier Solo">
+      <instrument name="Klavier" range="A0-C8" maxSimultaneousNotes="10">Tonumfang: A0 bis C8. Bis zu 10 Töne gleichzeitig spielbar.</instrument>
+    </ensemble>
+
+    <ensemble name="Harfe Solo">
+      <instrument name="Harfe" range="C1-G7" maxSimultaneousNotes="6">Tonumfang: C1 bis G7. Realistisch bis zu 6 Töne gleichzeitig (je nach Spielweise).</instrument>
+    </ensemble>
+  </instrumentations>
+</aleatoricMusic>
