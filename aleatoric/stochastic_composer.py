@@ -8,73 +8,74 @@ class StochasticComposer:
         self.config = parse_config(config_path)
         # ...existing instrument_mapping code...
         self.instrument_mapping = {
-            # Strings - German/English
-            "violine": instrument.Violin,
+            # Strings - English primary, German secondary for compatibility
             "violin": instrument.Violin,
-            "geige": instrument.Violin,
             "viola": instrument.Viola,
-            "bratsche": instrument.Viola,
             "cello": instrument.Violoncello,
             "violoncello": instrument.Violoncello,
-            "kontrabass": instrument.Contrabass,
-            "doublebass": instrument.Contrabass,
+            "contrabass": instrument.Contrabass,
+            "double bass": instrument.Contrabass,
+            "violine": instrument.Violin,  # German compatibility
+            "geige": instrument.Violin,    # German compatibility
+            "bratsche": instrument.Viola,  # German compatibility
+            "kontrabass": instrument.Contrabass,  # German compatibility
             
-            # Woodwinds
-            "flöte": instrument.Flute,
+            # Woodwinds - English primary
             "flute": instrument.Flute,
-            "querflöte": instrument.Flute,
             "piccolo": instrument.Piccolo,
             "oboe": instrument.Oboe,
-            "klarinette": instrument.Clarinet,
             "clarinet": instrument.Clarinet,
-            "fagott": instrument.Bassoon,
             "bassoon": instrument.Bassoon,
-            "saxophon": instrument.Saxophone,
             "saxophone": instrument.Saxophone,
+            "flöte": instrument.Flute,      # German compatibility
+            "querflöte": instrument.Flute,  # German compatibility
+            "klarinette": instrument.Clarinet,  # German compatibility
+            "fagott": instrument.Bassoon,   # German compatibility
+            "saxophon": instrument.Saxophone,  # German compatibility
             
-            # Brass
+            # Brass - English primary
             "horn": instrument.Horn,
-            "waldhorn": instrument.Horn,
-            "trompete": instrument.Trumpet,
             "trumpet": instrument.Trumpet,
-            "posaune": instrument.Trombone,
             "trombone": instrument.Trombone,
             "tuba": instrument.Tuba,
+            "waldhorn": instrument.Horn,    # German compatibility
+            "trompete": instrument.Trumpet, # German compatibility
+            "posaune": instrument.Trombone, # German compatibility
             
-            # Keyboards
-            "klavier": instrument.Piano,
+            # Keyboards - English primary
             "piano": instrument.Piano,
-            "flügel": instrument.Piano,
-            "keyboard": instrument.Piano,
-            "cembalo": instrument.Harpsichord,
             "harpsichord": instrument.Harpsichord,
-            "orgel": instrument.Organ,
             "organ": instrument.Organ,
+            "keyboard": instrument.Piano,
+            "klavier": instrument.Piano,    # German compatibility
+            "flügel": instrument.Piano,     # German compatibility
+            "cembalo": instrument.Harpsichord,  # German compatibility
+            "orgel": instrument.Organ,      # German compatibility
             
-            # Plucked/Harp
-            "harfe": instrument.Harp,
+            # Plucked/Harp - English primary
             "harp": instrument.Harp,
-            "gitarre": instrument.Guitar,
             "guitar": instrument.Guitar,
-            "mandoline": instrument.Mandolin,
             "mandolin": instrument.Mandolin,
+            "harfe": instrument.Harp,       # German compatibility
+            "gitarre": instrument.Guitar,   # German compatibility
+            "mandoline": instrument.Mandolin,  # German compatibility
             
-            # Percussion
-            "schlagzeug": instrument.Percussion,
-            "drums": instrument.Percussion,
+            # Percussion - English primary
             "percussion": instrument.Percussion,
+            "drums": instrument.Percussion,
             "timpani": instrument.Timpani,
-            "pauken": instrument.Timpani,
+            "schlagzeug": instrument.Percussion,  # German compatibility
+            "pauken": instrument.Timpani,   # German compatibility
             
-            # Voice
-            "sopran": instrument.Soprano,
+            # Voice - English primary
             "soprano": instrument.Soprano,
-            "alt": instrument.Alto,
             "alto": instrument.Alto,
             "tenor": instrument.Tenor,
             "bass": instrument.Bass,
-            "bariton": instrument.Baritone,
             "baritone": instrument.Baritone,
+            "sopran": instrument.Soprano,   # German compatibility
+            "alt": instrument.Alto,         # German compatibility
+            "bariton": instrument.Baritone, # German compatibility
         }
     
     def get_random_measures_count(self):
@@ -152,17 +153,17 @@ class StochasticComposer:
             
         name_clean = instrument_name.lower().strip()
         
-        # 1. Direkte Suche im Mapping
+        # 1. Direct search in mapping
         if name_clean in self.instrument_mapping:
             return self.instrument_mapping[name_clean]()
         
-        # 2. Partielle Suche (enthält Wort)
+        # 2. Partial search (contains word)
         for key, instr_class in self.instrument_mapping.items():
             if key in name_clean or name_clean in key:
                 print(f"Partial match: '{instrument_name}' -> {instr_class.__name__}")
                 return instr_class()
         
-        # 3. Fuzzy String Matching (ähnliche Schreibweise)
+        # 3. Fuzzy String Matching (similar spelling)
         instrument_keys = list(self.instrument_mapping.keys())
         close_matches = get_close_matches(name_clean, instrument_keys, n=1, cutoff=0.6)
         
@@ -172,62 +173,62 @@ class StochasticComposer:
             print(f"Fuzzy match: '{instrument_name}' -> '{matched_key}' -> {matched_instrument.__name__}")
             return matched_instrument()
         
-        # 4. Kategorien-basierte Fallback-Logik
+        # 4. Category-based fallback logic
         fallback = self._get_category_fallback(name_clean)
         if fallback:
             print(f"Category fallback: '{instrument_name}' -> {fallback.__name__}")
             return fallback()
         
-        # 5. Letzter Fallback basierend auf Instrumentenbereich aus Config
+        # 5. Last fallback based on instrument range from config
         config_fallback = self._get_config_based_fallback(instrument_name)
         if config_fallback:
             print(f"Config-based fallback: '{instrument_name}' -> {config_fallback.__name__}")
             return config_fallback()
         
-        # 6. Ultimativer Fallback
+        # 6. Ultimate fallback
         print(f"No match found for '{instrument_name}', using Piano as default")
         return instrument.Piano()
     
     def _get_category_fallback(self, name_clean):
-        """Kategorien-basierte Fallback-Logik."""
-        # Streicher-Kategorien
+        """Category-based fallback logic."""
+        # String categories
         if any(word in name_clean for word in ["string", "streicher", "strings", "bogen"]):
             return instrument.Violin
             
-        # Bläser-Kategorien
+        # Wind categories
         if any(word in name_clean for word in ["wind", "bläser", "holz", "wood", "brass", "blech"]):
             return instrument.Flute
             
-        # Tasten-Kategorien
+        # Keyboard categories
         if any(word in name_clean for word in ["key", "taste", "keyboard"]):
             return instrument.Piano
             
-        # Schlag-Kategorien
+        # Percussion categories
         if any(word in name_clean for word in ["drum", "schlag", "percussion", "perc"]):
             return instrument.Percussion
             
         return None
     
     def _get_config_based_fallback(self, instrument_name):
-        """Fallback basierend auf Tonbereich aus der Konfiguration."""
-        # Suche das Instrument in der Config
+        """Fallback based on range from configuration."""
+        # Search for the instrument in the config
         for ensemble in self.config.ensembles.values():
             for instr in ensemble.instruments:
                 if instr.name.lower() == instrument_name.lower():
-                    # Basierend auf Tonbereich entscheiden
+                    # Decide based on range
                     low_midi = self.note_name_to_midi(instr.range_low)
                     high_midi = self.note_name_to_midi(instr.range_high)
                     
-                    # Sehr tief -> Bass-Instrument
-                    if low_midi < 40:  # unter E2
+                    # Very low -> Bass instrument
+                    if low_midi < 40:  # below E2
                         return instrument.Contrabass
-                    # Mittel-tief -> Cello/Fagott
-                    elif low_midi < 55:  # unter G3
+                    # Medium-low -> Cello/Bassoon
+                    elif low_midi < 55:  # below G3
                         return instrument.Violoncello
-                    # Mittel -> Viola/Horn
-                    elif low_midi < 65:  # unter F4
+                    # Medium -> Viola/Horn
+                    elif low_midi < 65:  # below F4
                         return instrument.Viola
-                    # Hoch -> Violine/Flöte
+                    # High -> Violin/Flute
                     else:
                         return instrument.Violin
         
@@ -289,7 +290,7 @@ class StochasticComposer:
         
         return measure
     
-    def create_random_score(self, ensemble_name="Klavier Solo", num_measures=None, title="Aleatorische Musik"):
+    def create_random_score(self, ensemble_name="Piano Solo", num_measures=None, title="Aleatoric Music"):
         """Create a complete random score using the specified ensemble."""
         if ensemble_name not in self.config.ensembles:
             available = list(self.config.ensembles.keys())
@@ -340,7 +341,7 @@ class StochasticComposer:
         
         return score
 
-def create_multi_voice_score(ensemble_name="Streichtrio", num_measures=None, title="Aleatorische Komposition"):
+def create_multi_voice_score(ensemble_name="String Trio", num_measures=None, title="Aleatoric Composition"):
     """Create a random multi-voice score using the stochastic composer."""
     composer = StochasticComposer()
     return composer.create_random_score(ensemble_name, num_measures, title)
@@ -362,5 +363,5 @@ def create_random_score():
     return composer.create_random_score(
         ensemble_name=chosen_ensemble,
         num_measures=num_measures,
-        title=f"Aleatorische Musik - {chosen_ensemble}"
+        title=f"Aleatoric Music - {chosen_ensemble}"
     )

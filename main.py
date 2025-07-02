@@ -8,23 +8,23 @@ def main():
     print()
     
     # Option 1: Create score with specific ensemble
-    print("Generating Streichtrio composition...")
-    score1 = create_multi_voice_score("Streichtrio", 12, "Aleatorisches Streichtrio")
-    generate_pdf_and_mp3(score1, "streichtrio_aleatorisch")
+    print("Generating String Trio composition...")
+    score1 = create_multi_voice_score("String Trio", 12, "Aleatoric String Trio")
+    generate_pdf_and_mp3(score1, "string_trio_aleatoric")
     
     print()
     
     # Option 2: Completely random ensemble and length
     print("Generating completely random composition...")
     score2 = create_random_score()
-    generate_pdf_and_mp3(score2, "vollstaendig_aleatorisch")
+    generate_pdf_and_mp3(score2, "completely_aleatoric")
     
     print()
     
     # Option 3: Piano solo
     print("Generating piano solo...")
-    score3 = create_multi_voice_score("Klavier Solo", 16, "Aleatorisches Klavierstück")
-    generate_pdf_and_mp3(score3, "klavier_aleatorisch")
+    score3 = create_multi_voice_score("Piano Solo", 16, "Aleatoric Piano Piece")
+    generate_pdf_and_mp3(score3, "piano_aleatoric")
     
     print("\n=== Generation Complete ===")
     print("Check the 'output' folder for generated files.")

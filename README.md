@@ -1,61 +1,61 @@
-# Musik-Aleatorik
+# Music-Aleatoric
 
-Ein **Stochastischer Musik-Generator**, der mithilfe von **Webcam-basierter Zufälligkeit** und **XML-Konfiguration** aleatorische Musikstücke komponiert und als Noten (PDF) und Audio (MP3) exportiert.
+A **Stochastic Music Generator** that uses **webcam-based randomness** and **XML configuration** to compose aleatoric musical pieces and export them as sheet music (PDF) and audio (MP3).
 
-## 🎵 Wie funktioniert es?
+## 🎵 How does it work?
 
-**Einfache 4-Schritte-Erklärung:**
+**Simple 4-step explanation:**
 
-1. **Konfiguration lesen**: Das Programm liest die `config/config.xml` Datei, die alle musikalischen Parameter enthält (Instrumente, Rhythmen, Dynamik, Taktanzahl-Bereiche).
+1. **Configuration reading**: The program reads the `config/config.xml` file, which contains all musical parameters (instruments, rhythms, dynamics, measure count ranges).
 
-2. **Zufälligkeit aus Webcam**: Die Kamera nimmt kontinuierlich Bilder auf und nutzt winzige Bewegungen und Kamera-Rauschen zur Generierung echter Zufallszahlen.
+2. **Randomness from webcam**: The camera continuously captures images and uses tiny movements and camera noise to generate true random numbers.
 
-3. **Musikkomposition**: Basierend auf der XML-Konfiguration und den Webcam-Zufallszahlen wird automatisch ein komplettes Musikstück komponiert (Noten, Rhythmen, Dynamik).
+3. **Music composition**: Based on the XML configuration and webcam random numbers, a complete musical piece is automatically composed (notes, rhythms, dynamics).
 
-4. **Export in 4 Formaten**: Das fertige Werk wird automatisch exportiert als:
-   - **PDF** (Noten zum Musizieren)
-   - **MP3** (Audio zum Anhören)
-   - **MIDI** (für Musiksoftware)
-   - **MusicXML** (für andere Notenprogramme)
+4. **Export in 4 formats**: The finished work is automatically exported as:
+   - **PDF** (sheet music for playing)
+   - **MP3** (audio for listening)
+   - **MIDI** (for music software)
+   - **MusicXML** (for other notation programs)
 
 
 
-## 📁 Projektstruktur
+## 📁 Project Structure
 
 ```
-Musik-Aleatorik/
+Music-Aleatoric/
 ├── aleatoric/
 │   ├── __init__.py
-│   ├── stochastic_composer.py    # Hauptkomponist mit intelligentem Instrument-Mapping
-│   ├── score_exporter.py         # PDF/MP3 Export
-│   ├── custom_random.py          # Webcam-Zufallsgenerator mit Pool-System
-│   └── config_parser.py          # XML-Konfiguration mit Taktanzahl-Bereichen
+│   ├── stochastic_composer.py    # Main composer with intelligent instrument mapping
+│   ├── score_exporter.py         # PDF/MP3 export
+│   ├── custom_random.py          # Webcam random generator with pool system
+│   └── config_parser.py          # XML configuration with measure count ranges
 ├── config/
-│   └── config.xml                # Musik-Einstellungen inkl. Taktanzahl-Bereiche
-├── output/                       # Generierte Dateien
-├── main.py                       # Hauptprogramm
-├── requirements.txt              # Python-Abhängigkeiten
+│   └── config.xml                # Music settings including measure count ranges
+├── output/                       # Generated files
+├── main.py                       # Main program
+├── requirements.txt              # Python dependencies
 └── README.md
 ```
 
-## 🚀 Installation - Schritt für Schritt 
+## 🚀 Installation - Step by Step
 
-### Schritt 1: Python installieren
+### Step 1: Install Python
 
-**Python** ist die Programmiersprache, die unser Musik-Generator verwendet.
+**Python** is the programming language our music generator uses.
 
 #### Windows:
-1. Gehe auf [python.org/downloads](https://www.python.org/downloads/)
-2. Lade die neueste Python-Version herunter (mind. 3.8)
-3. **Wichtig**: Bei der Installation **"Add Python to PATH"** ankreuzen!
-4. Installiere Python mit den Standard-Einstellungen
+1. Go to [python.org/downloads](https://www.python.org/downloads/)
+2. Download the latest Python version (min. 3.8)
+3. **Important**: Check **"Add Python to PATH"** during installation!
+4. Install Python with default settings
 
 #### macOS:
 ```bash
-# Option 1: Von python.org herunterladen (einfacher)
-# Gehe auf python.org/downloads und lade die macOS-Version herunter
+# Option 1: Download from python.org (easier)
+# Go to python.org/downloads and download the macOS version
 
-# Option 2: Mit Homebrew (falls installiert)
+# Option 2: With Homebrew (if installed)
 brew install python
 ```
 
@@ -70,86 +70,86 @@ sudo apt install python3 python3-pip python3-venv
 sudo pacman -S python python-pip
 ```
 
-### Schritt 2: Python testen
+### Step 2: Test Python
 
-Öffne ein **Terminal** (Linux/Mac) oder die **Eingabeaufforderung** (Windows):
+Open a **Terminal** (Linux/Mac) or **Command Prompt** (Windows):
 
 ```bash
 python --version
-# Sollte zeigen: Python 3.8.x oder höher
+# Should show: Python 3.8.x or higher
 
-# Falls "python" nicht funktioniert, versuche:
+# If "python" doesn't work, try:
 python3 --version
 ```
 
-### Schritt 3: Virtuelles Environment erstellen
+### Step 3: Create Virtual Environment
 
-Ein **virtuelles Environment** ist wie ein separater Bereich für unser Musik-Projekt, damit es nicht mit anderen Python-Programmen interferiert.
+A **virtual environment** is like a separate area for our music project, so it doesn't interfere with other Python programs.
 
-#### Projekt herunterladen:
+#### Download project:
 ```bash
 git clone [repository-url]
-cd Musik-Aleatorik
+cd Music-Aleatoric
 ```
 
-#### Virtual Environment erstellen:
+#### Create virtual environment:
 
 **Windows:**
 ```cmd
-# Environment erstellen
-python -m venv musik_env
+# Create environment
+python -m venv music_env
 
-# Environment aktivieren
-musik_env\Scripts\activate
+# Activate environment
+music_env\Scripts\activate
 
-# Du solltest jetzt "(musik_env)" vor deinem Prompt sehen
+# You should now see "(music_env)" before your prompt
 ```
 
 **Linux/macOS:**
 ```bash
-# Environment erstellen
-python3 -m venv musik_env
+# Create environment
+python3 -m venv music_env
 
-# Environment aktivieren
-source musik_env/bin/activate
+# Activate environment
+source music_env/bin/activate
 
-# Du solltest jetzt "(musik_env)" vor deinem Prompt sehen
+# You should now see "(music_env)" before your prompt
 ```
 
-### Schritt 4: Python-Pakete installieren
+### Step 4: Install Python Packages
 
-Mit aktiviertem Virtual Environment:
+With activated virtual environment:
 
 ```bash
-# Alle benötigten Pakete installieren
+# Install all required packages
 pip install -r requirements.txt
 
-# Falls das nicht funktioniert, einzeln installieren:
+# If that doesn't work, install individually:
 pip install music21 opencv-python numpy
 ```
 
-### Schritt 5: MuseScore installieren (für PDF/MP3 Export)
+### Step 5: Install MuseScore (for PDF/MP3 Export)
 
-**MuseScore** verwandelt unsere Musik-Daten in schöne PDF-Noten und MP3-Audio.
+**MuseScore** converts our music data into beautiful PDF sheet music and MP3 audio.
 
 #### Windows:
-1. Gehe auf [musescore.org](https://musescore.org)
-2. Lade MuseScore 4 herunter und installiere es
-3. Starte MuseScore einmal, um sicherzustellen, dass es funktioniert
+1. Go to [musescore.org](https://musescore.org)
+2. Download and install MuseScore 4
+3. Start MuseScore once to ensure it works
 
 #### macOS:
 ```bash
-# Mit Homebrew
+# With Homebrew
 brew install musescore
 
-# Oder von musescore.org herunterladen
+# Or download from musescore.org
 ```
 
 #### Linux (Ubuntu/Debian):
 ```bash
 sudo apt update
 sudo apt install musescore3
-# oder für neuere Version:
+# or for newer version:
 sudo snap install musescore
 ```
 
@@ -158,24 +158,24 @@ sudo snap install musescore
 sudo pacman -S musescore
 ```
 
-### Schritt 6: Webcam anschließen
+### Step 6: Connect Webcam
 
-- Stelle sicher, dass eine **Webcam** angeschlossen ist
-- Die meisten Laptops haben bereits eine integrierte Webcam
-- USB-Webcams funktionieren ebenfalls
+- Make sure a **webcam** is connected
+- Most laptops already have an integrated webcam
+- USB webcams also work
 
-### Schritt 7: Erste Musik generieren!
+### Step 7: Generate First Music!
 
 ```bash
-# Virtual Environment aktivieren (falls nicht bereits aktiv)
-# Windows: musik_env\Scripts\activate
-# Linux/Mac: source musik_env/bin/activate
+# Activate virtual environment (if not already active)
+# Windows: music_env\Scripts\activate
+# Linux/Mac: source music_env/bin/activate
 
-# Musik generieren
+# Generate music
 python main.py
 ```
 
-## 📋 Requirements (Automatisch installiert)
+## 📋 Requirements (Automatically installed)
 
 ```
 music21>=8.1.0
@@ -183,80 +183,76 @@ opencv-python>=4.8.0
 numpy>=1.24.0
 ```
 
-## 🔄 Virtual Environment - Wichtige Befehle
+## 🔄 Virtual Environment - Important Commands
 
-### Environment aktivieren:
-**Jedes Mal, wenn du das Projekt verwendest, musst du das Virtual Environment aktivieren:**
+### Activate environment:
+**Every time you use the project, you must activate the virtual environment:**
 
 **Windows:**
 ```cmd
-cd Musik-Aleatorik
-musik_env\Scripts\activate
+cd Music-Aleatoric
+music_env\Scripts\activate
 ```
 
 **Linux/macOS:**
 ```bash
-cd Musik-Aleatorik
-source musik_env/bin/activate
+cd Music-Aleatoric
+source music_env/bin/activate
 ```
 
-### Environment deaktivieren:
+### Deactivate environment:
 ```bash
 deactivate
 ```
 
-### Prüfen, ob Environment aktiv ist:
-- Du siehst `(musik_env)` vor deinem Terminal-Prompt
-- Oder teste: `which python` (sollte auf das venv zeigen)
+### Check if environment is active:
+- You see `(music_env)` before your terminal prompt
+- Or test: `which python` (should point to the venv)
 
-## 🎵 Verwendung
+## 🎵 Usage
 
-### Einfache Nutzung
+### Simple Usage
 ```bash
-# Stelle sicher, dass Virtual Environment aktiv ist!
-# Du solltest (musik_env) in deinem Terminal sehen
+# Make sure virtual environment is active!
+# You should see (music_env) in your terminal
 
 python main.py
 ```
 
-Das Programm generiert automatisch:
-1. **Streichtrio** (zufällige Taktanzahl aus Config-Bereich)
-2. **Zufälliges Ensemble** (zufällige Taktanzahl aus Config-Bereich)
-3. **Klavierstück** (zufällige Taktanzahl aus Config-Bereich)
+The program automatically generates:
+1. **String Trio** (random measure count from config range)
+2. **Random Ensemble** (random measure count from config range)
+3. **Piano Piece** (random measure count from config range)
 
+## ⚙️ Configuration
 
-## ⚙️ Konfiguration
+The file `config/config.xml` contains all musical parameters:
 
-Die Datei `config/config.xml` enthält alle musikalischen Parameter:
-
-#### Taktanzahl-Bereiche:
+#### Measure Count Ranges:
 ```xml
-<num_measures>30-40</num_measures>  <!-- Zufällig zwischen 30 und 40 Takten -->
-<!-- oder -->
-<num_measures>20</num_measures>     <!-- Feste Anzahl von 20 Takten -->
+<num_measures>30-40</num_measures>  <!-- Random between 30 and 40 measures -->
+<!-- or -->
+<num_measures>20</num_measures>     <!-- Fixed number of 20 measures -->
 ```
 
+## 📁 Output & File Formats
 
-
-## 📁 Output & Dateiformate
-
-Jede Komposition erstellt automatisch einen eigenen Ordner in `output/` mit **4 verschiedenen Dateiformaten**:
+Each composition automatically creates its own folder in `output/` with **4 different file formats**:
 
 ```
 output/
-├── streichtrio_aleatorisch/
-│   ├── streichtrio_aleatorisch.musicxml    # Für andere Notenprogramme
-│   ├── streichtrio_aleatorisch.pdf         # Professionell gesetzte Noten
-│   ├── streichtrio_aleatorisch.mid         # Für weitere Bearbeitung
-│   └── streichtrio_aleatorisch.mp3         # Audio-Wiedergabe
-└── weitere_kompositionen/
+├── string_trio_aleatoric/
+│   ├── string_trio_aleatoric.musicxml    # For other notation programs
+│   ├── string_trio_aleatoric.pdf         # Professionally typeset sheet music
+│   ├── string_trio_aleatoric.mid         # For further editing
+│   └── string_trio_aleatoric.mp3         # Audio playback
+└── other_compositions/
 ```
 
-**Was du erhältst:**
-- **PDF**: Druckfertige Noten zum Musizieren
-- **MP3**: Sofort anhörbare Audio-Version  
-- **MIDI**: Für DAWs und Musiksoftware
-
+**What you get:**
+- **PDF**: Print-ready sheet music for performance
+- **MP3**: Immediately listenable audio version
+- **MIDI**: For DAWs and music software
 
 ---
-*Lass die Webcam entscheiden, wie deine Musik klingt! 🎲🎵*
+*Let the webcam decide how your music sounds! 🎲🎵*

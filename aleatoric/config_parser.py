@@ -41,12 +41,10 @@ def parse_config(config_path="config/config.xml"):
     if num_measures_elem is not None and num_measures_elem.text:
         num_measures_text = num_measures_elem.text.strip()
         if '-' in num_measures_text:
-            # Format: "30-40"
             min_str, max_str = num_measures_text.split('-')
             num_measures_min = int(min_str.strip())
             num_measures_max = int(max_str.strip())
         else:
-            # Format: "20" (feste Anzahl)
             num_measures_min = int(num_measures_text)
             num_measures_max = int(num_measures_text)
     
