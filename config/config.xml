@@ -27,40 +27,40 @@
 
   <instrumentations>
     <ensemble name="String Trio">
-      <instrument name="Violin" range="G3-E7" maxSimultaneousNotes="2">Range: G3 to E7. Double stops possible, maximum 2 notes simultaneously.</instrument>
-      <instrument name="Viola" range="C3-A6" maxSimultaneousNotes="2">Range: C3 to A6. Double stops possible.</instrument>
-      <instrument name="Cello" range="C2-G5" maxSimultaneousNotes="2">Range: C2 to G5. Two simultaneous notes realistic.</instrument>
+      <instrument name="Violin" range="G3-E7" maxSimultaneousNotes="2" clef="treble">Range: G3 to E7. Double stops possible, maximum 2 notes simultaneously.</instrument>
+      <instrument name="Viola" range="C3-A6" maxSimultaneousNotes="2" clef="alto">Range: C3 to A6. Double stops possible.</instrument>
+      <instrument name="Cello" range="C2-G5" maxSimultaneousNotes="2" clef="bass">Range: C2 to G5. Two simultaneous notes realistic.</instrument>
     </ensemble>
 
     <ensemble name="Woodwind Quintet">
-      <instrument name="Flute" range="C4-D7" maxSimultaneousNotes="1">Range: C4 to D7. Monophonic only.</instrument>
-      <instrument name="Oboe" range="Bb3-A6" maxSimultaneousNotes="1">Range: Bb3 to A6. Monophonic only.</instrument>
-      <instrument name="Clarinet" range="E3-C7" maxSimultaneousNotes="1">Range: E3 to C7. Monophonic only.</instrument>
-      <instrument name="Bassoon" range="Bb1-E5" maxSimultaneousNotes="1">Range: Bb1 to E5. Monophonic only.</instrument>
-      <instrument name="Horn" range="F2-C6" maxSimultaneousNotes="1">Range: F2 to C6. Monophonic only.</instrument>
+      <instrument name="Flute" range="C4-D7" maxSimultaneousNotes="1" clef="treble">Range: C4 to D7. Monophonic only.</instrument>
+      <instrument name="Oboe" range="Bb3-A6" maxSimultaneousNotes="1" clef="treble">Range: Bb3 to A6. Monophonic only.</instrument>
+      <instrument name="Clarinet" range="E3-C7" maxSimultaneousNotes="1" clef="treble">Range: E3 to C7. Monophonic only.</instrument>
+      <instrument name="Bassoon" range="Bb1-E5" maxSimultaneousNotes="1" clef="bass">Range: Bb1 to E5. Monophonic only.</instrument>
+      <instrument name="Horn" range="F2-C6" maxSimultaneousNotes="1" clef="treble">Range: F2 to C6. Monophonic only.</instrument>
     </ensemble>
 
     <ensemble name="Clarinet and Piano">
-      <instrument name="Clarinet" range="E3-C7" maxSimultaneousNotes="1">Range: E3 to C7. Monophonic only.</instrument>
-      <instrument name="Piano" range="A0-C8" maxSimultaneousNotes="10">Range: A0 to C8. Up to 10 notes simultaneously (all fingers).</instrument>
+      <instrument name="Clarinet" range="E3-C7" maxSimultaneousNotes="1" clef="treble">Range: E3 to C7. Monophonic only.</instrument>
+      <instrument name="Piano" range="A0-C8" maxSimultaneousNotes="10" clef="treble_bass">Range: A0 to C8. Up to 10 notes simultaneously (all fingers).</instrument>
     </ensemble>
 
     <ensemble name="Flute and Piano">
-      <instrument name="Flute" range="C4-D7" maxSimultaneousNotes="1">Range: C4 to D7. Monophonic only.</instrument>
-      <instrument name="Piano" range="A0-C8" maxSimultaneousNotes="10">Range: A0 to C8. Up to 10 notes simultaneously.</instrument>
+      <instrument name="Flute" range="C4-D7" maxSimultaneousNotes="1" clef="treble">Range: C4 to D7. Monophonic only.</instrument>
+      <instrument name="Piano" range="A0-C8" maxSimultaneousNotes="10" clef="treble_bass">Range: A0 to C8. Up to 10 notes simultaneously.</instrument>
     </ensemble>
 
     <ensemble name="Violin and Piano">
-      <instrument name="Violin" range="G3-E7" maxSimultaneousNotes="2">Range: G3 to E7. Double stops possible.</instrument>
-      <instrument name="Piano" range="A0-C8" maxSimultaneousNotes="10">Range: A0 to C8. Up to 10 notes simultaneously.</instrument>
+      <instrument name="Violin" range="G3-E7" maxSimultaneousNotes="2" clef="treble">Range: G3 to E7. Double stops possible.</instrument>
+      <instrument name="Piano" range="A0-C8" maxSimultaneousNotes="10" clef="treble_bass">Range: A0 to C8. Up to 10 notes simultaneously.</instrument>
     </ensemble>
 
     <ensemble name="Piano Solo">
-      <instrument name="Piano" range="A0-C8" maxSimultaneousNotes="10">Range: A0 to C8. Up to 10 notes simultaneously playable.</instrument>
+      <instrument name="Piano" range="A0-C8" maxSimultaneousNotes="10" clef="treble_bass">Range: A0 to C8. Up to 10 notes simultaneously playable.</instrument>
     </ensemble>
 
     <ensemble name="Harp Solo">
-      <instrument name="Harp" range="C1-G7" maxSimultaneousNotes="6">Range: C1 to G7. Realistically up to 6 notes simultaneously (depending on technique).</instrument>
+      <instrument name="Harp" range="C1-G7" maxSimultaneousNotes="6" clef="treble_bass">Range: C1 to G7. Realistically up to 6 notes simultaneously (depending on technique).</instrument>
     </ensemble>
   </instrumentations>
 </aleatoricMusic>

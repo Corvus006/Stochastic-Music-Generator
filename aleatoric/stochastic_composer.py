@@ -78,6 +78,23 @@ class StochasticComposer:
             "bariton": instrument.Baritone, # German compatibility
         }
     
+    def get_clef_from_name(self, clef_name):
+        """Convert clef name to music21 clef object."""
+        if clef_name == "treble":
+            return clef.TrebleClef()
+        elif clef_name == "bass":
+            return clef.BassClef()
+        elif clef_name == "alto":
+            return clef.AltoClef()
+        elif clef_name == "tenor":
+            return clef.TenorClef()
+        elif clef_name == "treble_bass":
+            # For piano - we'll use treble clef by default
+            return clef.TrebleClef()
+        else:
+            # Default to treble clef
+            return clef.TrebleClef()
+
     def get_random_measures_count(self):
         """Get a random number of measures from config range."""
         return get_random_number(self.config.num_measures_min, self.config.num_measures_max)
@@ -320,6 +337,11 @@ class StochasticComposer:
             # Add instrument
             music21_instr = self.get_music21_instrument(instr.name)
             part.insert(0, music21_instr)
+            
+            # Add appropriate clef (Notenschlüssel)
+            clef_obj = self.get_clef_from_name(instr.clef)
+            part.insert(0, clef_obj)
+            
             part.insert(0, time_sig)
             
             # Add random dynamic at the beginning
@@ -341,6 +363,23 @@ class StochasticComposer:
         
         return score
 
+    def get_clef(self, notenschluessel):
+        """Convert German clef name to music21 clef object."""
+        if notenschluessel == "treble":
+            return clef.TrebleClef()
+        elif notenschluessel == "bass":
+            return clef.BassClef()
+        elif notenschluessel == "alto":
+            return clef.AltoClef()
+        elif notenschluessel == "tenor":
+            return clef.TenorClef()
+        elif notenschluessel == "treble_bass":
+            # For piano - we'll use treble clef by default, bass clef will be added automatically for lower notes
+            return clef.TrebleClef()
+        else:
+            # Default to treble clef
+            return clef.TrebleClef()
+    
 def create_multi_voice_score(ensemble_name="String Trio", num_measures=None, title="Aleatoric Composition"):
     """Create a random multi-voice score using the stochastic composer."""
     composer = StochasticComposer()

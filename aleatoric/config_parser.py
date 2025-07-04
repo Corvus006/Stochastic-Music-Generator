@@ -9,6 +9,7 @@ class Instrument:
     range_low: str
     range_high: str
     max_simultaneous_notes: int
+    clef: str
     description: str
 
 @dataclass
@@ -78,12 +79,13 @@ def parse_config(config_path="config/config.xml"):
                 name = instrument_elem.get('name')
                 range_str = instrument_elem.get('range')
                 max_notes = int(instrument_elem.get('maxSimultaneousNotes', 1))
+                clef_name = instrument_elem.get('clef', 'treble')  # Default to treble clef
                 description = instrument_elem.text or ""
                 
                 # Parse range
                 range_low, range_high = range_str.split('-')
                 
-                instrument = Instrument(name, range_low, range_high, max_notes, description)
+                instrument = Instrument(name, range_low, range_high, max_notes, clef_name, description)
                 instruments.append(instrument)
             
             ensembles[ensemble_name] = Ensemble(ensemble_name, instruments)
