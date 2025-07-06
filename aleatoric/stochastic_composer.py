@@ -1,4 +1,5 @@
 from music21 import *
+from music21 import clef, pitch, note, chord, articulations, instrument, stream, metadata, meter, dynamics, layout
 from difflib import get_close_matches
 from .custom_random import get_random_number
 from .config_parser import parse_config, MusicConfig
@@ -89,11 +90,26 @@ class StochasticComposer:
         elif clef_name == "tenor":
             return clef.TenorClef()
         elif clef_name == "treble_bass":
-            # For piano - we'll use treble clef by default
-            return clef.TrebleClef()
+            # Return both clefs for grand staff instruments
+            return [clef.TrebleClef(), clef.BassClef()]
         else:
             # Default to treble clef
             return clef.TrebleClef()
+    
+    def should_use_bass_clef(self, note_name):
+        """Determine if a note should use bass clef based on pitch."""
+        try:
+            if isinstance(note_name, list):
+                # For chords, use the lowest note to determine clef
+                pitches = [pitch.Pitch(n) for n in note_name]
+                lowest_pitch = min(pitches, key=lambda p: p.ps)
+                return lowest_pitch.ps < pitch.Pitch('C4').ps
+            else:
+                # For single notes
+                note_pitch = pitch.Pitch(note_name)
+                return note_pitch.ps < pitch.Pitch('C4').ps
+        except:
+            return False
 
     def get_random_measures_count(self):
         """Get a random number of measures from config range."""
@@ -307,6 +323,87 @@ class StochasticComposer:
         
         return measure
     
+    def create_random_grand_staff_measure(self, instr, beats_per_measure=4):
+        """Create random measures for grand staff instruments (piano, harp) with proper clef distribution."""
+        treble_measure = stream.Measure()
+        bass_measure = stream.Measure()
+        current_beats = 0.0
+        
+        while current_beats < beats_per_measure:
+            remaining_beats = beats_per_measure - current_beats
+            
+            # Get random rhythm, but don't exceed remaining beats
+            rhythm = self.get_random_rhythm()
+            if rhythm > remaining_beats:
+                rhythm = remaining_beats
+            
+            # Decide if we want notes/chords or rests
+            note_type = get_random_number(1, 10)
+            
+            if note_type <= 7:  # 70% chance for notes/chords
+                # Decide how many notes (up to instrument's max)
+                max_notes = min(6, instr.max_simultaneous_notes)  # Reasonable limit for grand staff
+                num_notes = get_random_number(1, max_notes)
+                
+                # Generate all notes first
+                all_notes = []
+                for _ in range(num_notes):
+                    note_name = self.get_random_note_in_range(instr.range_low, instr.range_high)
+                    all_notes.append(note_name)
+                
+                # Separate notes by clef
+                treble_notes = []
+                bass_notes = []
+                
+                for note_name in all_notes:
+                    if self.should_use_bass_clef(note_name):
+                        bass_notes.append(note_name)
+                    else:
+                        treble_notes.append(note_name)
+                
+                # Add random articulation
+                articulation = self.get_random_articulation()
+                
+                # Create treble clef part
+                if treble_notes:
+                    if len(treble_notes) == 1:
+                        n = note.Note(treble_notes[0], quarterLength=rhythm)
+                        self.add_articulation_to_note(n, articulation)
+                        treble_measure.append(n)
+                    else:
+                        c = chord.Chord(treble_notes, quarterLength=rhythm)
+                        self.add_articulation_to_note(c, articulation)
+                        treble_measure.append(c)
+                else:
+                    # Add rest to treble if no treble notes
+                    r = note.Rest(quarterLength=rhythm)
+                    treble_measure.append(r)
+                
+                # Create bass clef part
+                if bass_notes:
+                    if len(bass_notes) == 1:
+                        n = note.Note(bass_notes[0], quarterLength=rhythm)
+                        self.add_articulation_to_note(n, articulation)
+                        bass_measure.append(n)
+                    else:
+                        c = chord.Chord(bass_notes, quarterLength=rhythm)
+                        self.add_articulation_to_note(c, articulation)
+                        bass_measure.append(c)
+                else:
+                    # Add rest to bass if no bass notes
+                    r = note.Rest(quarterLength=rhythm)
+                    bass_measure.append(r)
+                    
+            else:  # 30% chance for rests
+                r_treble = note.Rest(quarterLength=rhythm)
+                r_bass = note.Rest(quarterLength=rhythm)
+                treble_measure.append(r_treble)
+                bass_measure.append(r_bass)
+            
+            current_beats += rhythm
+        
+        return treble_measure, bass_measure
+    
     def create_random_score(self, ensemble_name="Piano Solo", num_measures=None, title="Aleatoric Music"):
         """Create a complete random score using the specified ensemble."""
         if ensemble_name not in self.config.ensembles:
@@ -331,36 +428,70 @@ class StochasticComposer:
         
         # Create parts for each instrument
         for instr in ensemble.instruments:
-            part = stream.Part()
-            part.partName = instr.name
-            
-            # Add instrument
-            music21_instr = self.get_music21_instrument(instr.name)
-            part.insert(0, music21_instr)
-            
-            # Add appropriate clef (Notenschlüssel)
             clef_obj = self.get_clef_from_name(instr.clef)
-            part.insert(0, clef_obj)
             
-            part.insert(0, time_sig)
-            
-            # Add random dynamic at the beginning
-            initial_dynamic = self.get_random_dynamic()
-            part.insert(0, dynamics.Dynamic(initial_dynamic))
-            
-            # Create random measures
-            for measure_num in range(num_measures):
-                measure = self.create_random_measure(instr)
+            if isinstance(clef_obj, list):  # Grand staff instrument (piano, harp)
+                # Create two separate parts for treble and bass - much simpler approach
+                # music21 will automatically group them as a grand staff when they have the same instrument
                 
-                # Occasionally add new dynamics
-                if get_random_number(1, 100) <= 20:  # 20% chance
-                    new_dynamic = self.get_random_dynamic()
-                    measure.insert(0, dynamics.Dynamic(new_dynamic))
+                # Treble clef part (right hand)
+                treble_part = stream.Part()
+                treble_part.partName = f"{instr.name}"
+                treble_part.id = f"{instr.name}_treble"
+                music21_instr = self.get_music21_instrument(instr.name)
+                treble_part.insert(0, music21_instr)
+                treble_part.insert(0, clef.TrebleClef())
+                treble_part.insert(0, time_sig)
+                initial_dynamic = self.get_random_dynamic()
+                treble_part.insert(0, dynamics.Dynamic(initial_dynamic))
                 
-                part.append(measure)
-            
-            score.append(part)
-        
+                # Bass clef part (left hand)
+                bass_part = stream.Part()
+                bass_part.partName = f"{instr.name}"
+                bass_part.id = f"{instr.name}_bass"
+                bass_part.insert(0, self.get_music21_instrument(instr.name))
+                bass_part.insert(0, clef.BassClef())
+                bass_part.insert(0, time_sig)
+                bass_part.insert(0, dynamics.Dynamic(initial_dynamic))
+                
+                # Generate measures for both parts
+                for measure_num in range(num_measures):
+                    treble_measure, bass_measure = self.create_random_grand_staff_measure(instr)
+                    # Occasionally add new dynamics
+                    if get_random_number(1, 100) <= 20:  # 20% chance
+                        new_dynamic = self.get_random_dynamic()
+                        treble_measure.insert(0, dynamics.Dynamic(new_dynamic))
+                        bass_measure.insert(0, dynamics.Dynamic(new_dynamic))
+                    
+                    treble_part.append(treble_measure)
+                    bass_part.append(bass_measure)
+                
+                # Add both parts to score
+                score.append(treble_part)
+                score.append(bass_part)
+                
+                # Create a staff group to explicitly indicate this is a grand staff (piano brace)
+                staff_group = layout.StaffGroup([treble_part, bass_part], 
+                                               name=instr.name, 
+                                               abbreviation=instr.name[:4], 
+                                               symbol='brace')
+                score.insert(0, staff_group)
+            else:  # Single clef instrument
+                part = stream.Part()
+                part.partName = instr.name
+                music21_instr = self.get_music21_instrument(instr.name)
+                part.insert(0, music21_instr)
+                part.insert(0, clef_obj)
+                part.insert(0, time_sig)
+                initial_dynamic = self.get_random_dynamic()
+                part.insert(0, dynamics.Dynamic(initial_dynamic))
+                for measure_num in range(num_measures):
+                    measure = self.create_random_measure(instr)
+                    if get_random_number(1, 100) <= 20:  # 20% chance
+                        new_dynamic = self.get_random_dynamic()
+                        measure.insert(0, dynamics.Dynamic(new_dynamic))
+                    part.append(measure)
+                score.append(part)
         return score
 
     def get_clef(self, notenschluessel):

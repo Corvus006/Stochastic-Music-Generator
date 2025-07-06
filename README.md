@@ -1,4 +1,4 @@
-# Music-Aleatoric
+# Stochastic Music Generator
 
 A **Stochastic Music Generator** that uses **webcam-based randomness** and **XML configuration** to compose aleatoric musical pieces and export them as sheet music (PDF) and audio (MP3).
 
@@ -39,6 +39,73 @@ Music-Aleatoric/
 ```
 
 ## 🚀 Installation - Step by Step
+
+### Prerequisites: Git and Terminal Access
+
+Before we start, you'll need **Git** (to download the project) and know how to open a **Terminal/Command Prompt**.
+
+#### Installing Git
+
+**Git** is a tool that lets you download and manage code projects from the internet.
+
+##### Windows:
+1. Go to [git-scm.com/download/win](https://git-scm.com/download/win)
+2. Download and install Git for Windows
+3. During installation, accept the default settings
+4. This also installs "Git Bash" which provides a Unix-like terminal
+
+##### macOS:
+```bash
+# Option 1: Download from git-scm.com (easier)
+# Go to git-scm.com/download/mac and download the installer
+
+# Option 2: With Homebrew (if installed)
+brew install git
+
+# Option 3: Git might already be installed, test with:
+git --version
+```
+
+##### Linux (Ubuntu/Debian):
+```bash
+sudo apt update
+sudo apt install git
+```
+
+##### Linux (Arch/Manjaro):
+```bash
+sudo pacman -S git
+```
+
+#### How to Open Terminal/Command Prompt
+
+You'll need to use the **terminal** to run commands. Here's how to open it:
+
+##### Windows:
+- **Method 1**: Press `Windows + R`, type `cmd`, press Enter
+- **Method 2**: Press `Windows + X`, select "Command Prompt" or "PowerShell"
+- **Method 3**: Search for "Command Prompt" in the Start menu
+- **Method 4**: Right-click in a folder while holding Shift, select "Open command window here"
+- **Method 5**: Use "Git Bash" (installed with Git) for a Unix-like experience
+
+##### macOS:
+- **Method 1**: Press `Cmd + Space`, type "Terminal", press Enter
+- **Method 2**: Go to Applications → Utilities → Terminal
+- **Method 3**: Press `Cmd + Space`, type "iTerm" if you have iTerm2 installed
+
+##### Linux:
+- **Method 1**: Press `Ctrl + Alt + T`
+- **Method 2**: Press `Super` (Windows key), type "Terminal"
+- **Method 3**: Right-click on desktop, select "Open Terminal" (on some distributions)
+
+#### Test Git Installation
+
+Open your terminal and test that Git is working:
+
+```bash
+git --version
+# Should show something like: git version 2.x.x
+```
 
 ### Step 1: Install Python
 
@@ -82,17 +149,19 @@ python --version
 python3 --version
 ```
 
-### Step 3: Create Virtual Environment
+### Step 3: Download the Project
 
-A **virtual environment** is like a separate area for our music project, so it doesn't interfere with other Python programs.
+Now that you have Git installed, download the music generator project:
 
-#### Download project:
 ```bash
-git clone [repository-url]
-cd Music-Aleatoric
+# Clone (download) the project from GitHub
+git clone https://github.com/Corvus006/Stochastic-Music-Generator.git
+
+# Navigate into the project folder
+cd Stochastic-Music-Generator
 ```
 
-#### Create virtual environment:
+### Step 4: Create Virtual Environment
 
 **Windows:**
 ```cmd
@@ -116,7 +185,7 @@ source music_env/bin/activate
 # You should now see "(music_env)" before your prompt
 ```
 
-### Step 4: Install Python Packages
+### Step 5: Install Python Packages
 
 With activated virtual environment:
 
@@ -128,7 +197,7 @@ pip install -r requirements.txt
 pip install music21 opencv-python numpy
 ```
 
-### Step 5: Install MuseScore (for PDF/MP3 Export)
+### Step 6: Install MuseScore (for PDF/MP3 Export)
 
 **MuseScore** converts our music data into beautiful PDF sheet music and MP3 audio.
 
@@ -158,13 +227,13 @@ sudo snap install musescore
 sudo pacman -S musescore
 ```
 
-### Step 6: Connect Webcam
+### Step 7: Connect Webcam
 
 - Make sure a **webcam** is connected
 - Most laptops already have an integrated webcam
 - USB webcams also work
 
-### Step 7: Generate First Music!
+### Step 8: Generate First Music!
 
 ```bash
 # Activate virtual environment (if not already active)

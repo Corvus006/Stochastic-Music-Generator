@@ -1,2 +1,4 @@
 output/
 .venv/
+music_env/
+__pycache__/
