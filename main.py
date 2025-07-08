@@ -7,11 +7,6 @@ def main():
     print("Using webcam-based randomness and XML configuration")
     print()
     
-    # Option 3: Piano solo
-    print("Generating piano solo...")
-    score3 = create_multi_voice_score("Piano Solo", 16, "Aleatoric Piano Piece")
-    generate_pdf_and_mp3(score3, "piano_aleatoric")
-    
     # Option 1: Create score with specific ensemble
     print("Generating String Trio composition...")
     score1 = create_multi_voice_score("String Trio", 12, "Aleatoric String Trio")
@@ -23,6 +18,11 @@ def main():
     print("Generating completely random composition...")
     score2 = create_random_score()
     generate_pdf_and_mp3(score2, "completely_aleatoric")
+    
+    # Option 3: Piano solo
+    print("Generating piano solo...")
+    score3 = create_multi_voice_score("Piano Solo", 16, "Aleatoric Piano Piece")
+    generate_pdf_and_mp3(score3, "piano_aleatoric")
     
     print()
     
